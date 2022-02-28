@@ -33,7 +33,7 @@ class _HomePageState extends State<HomePage> {
 
   //////////
   bool _isLoading = false;
-  bool _isButton = true;
+  bool _isButton = false;
 
 
 
@@ -55,96 +55,98 @@ class _HomePageState extends State<HomePage> {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Text(
-                  //   'FTP Connect',
-                  //   style: StyleGeneral.styleTextTitlePage,
-                  //   textAlign: TextAlign.center,
-                  // ),
-                  //
-                  // SizedBox(height: 20.h),
-                  // InputCustom(
-                  //   focusNode: _dominioFocus,
-                  //   controller: _inputDominioController,
-                  //   keyboardType: TextInputType.number,
-                  //   onFieldSubmitted: (term) {
-                  //     _fieldFocusChange(context, _dominioFocus, _userFocus);
-                  //   },
-                  //   hintText: 'Ingresa tu dominio',
-                  //   validator: (value) {
-                  //     if (value.isEmpty) return 'El Dominio es obligatorio';
-                  //     return null;
-                  //   },
-                  // ),
-                  //
-                  // SizedBox(
-                  //   height: 15.h,
-                  // ),
-                  // InputCustom(
-                  //   focusNode: _userFocus,
-                  //   controller: _inputUserController,
-                  //   onFieldSubmitted: (term) {
-                  //     _fieldFocusChange(context, _userFocus, _passFocus);
-                  //   },
-                  //   hintText: 'Ingresa tu usuario',
-                  //   validator: (value) {
-                  //     if (value.isEmpty) return 'El Usuario es obligatorio';
-                  //     return null;
-                  //   },
-                  // ),
-                  //
-                  // SizedBox(
-                  //   height: 15.h,
-                  // ),
-                  // InputCustom(
-                  //   focusNode: _passFocus,
-                  //   controller: _inputPassController,
-                  //   textInputAction: TextInputAction.done,
-                  //   hintText: 'Ingresa tu contraseña',
-                  //   validator: (value) {
-                  //     if (value.isEmpty) return 'La contraseña es obligatorio';
-                  //     return null;
-                  //   },
-                  // ),
-                  //
-                  // SizedBox(
-                  //   height: 25.h,
-                  // ),
-                  // ButtonCustom(
-                  //   text: 'Elegir archivo',
-                  //   fullscreen: true,
-                  //   onTap: () async {
-                  //     FilePickerResult result = await FilePicker.platform.pickFiles();
-                  //
-                  //     if(result != null) {
-                  //       PlatformFile file = result.files.first;
-                  //
-                  //       setState(() {
-                  //         nameFile = file.name;
-                  //         pathFile = file.path;
-                  //
-                  //         _isButton= true;
-                  //       });
-                  //     } else {
-                  //       // User canceled the picker
-                  //     }
-                  //   },
-                  // ),
-                  //
-                  // SizedBox(
-                  //   height: 20.h,
-                  // ),
-                  //
-                  // Center(
-                  //   child: Text(
-                  //     nameFile,
-                  //     style: StyleGeneral.styleTextSmall,
-                  //     textAlign: TextAlign.center,
-                  //   )
-                  // ),
-                  //
-                  // SizedBox(
-                  //   height: 65.h,
-                  // ),
+                   Text(
+                     'FTP Connect',
+                     style: StyleGeneral.styleTextTitlePage,
+                     textAlign: TextAlign.center,
+                   ),
+                  
+                   SizedBox(height: 20.h),
+                  /* InputCustom(
+                     focusNode: _dominioFocus,
+                     controller: _inputDominioController,
+                     keyboardType: TextInputType.number,
+                     onFieldSubmitted: (term) {
+                       _fieldFocusChange(context, _dominioFocus, _userFocus);
+                     },
+                     hintText: 'Ingresa tu dominio',
+                     validator: (value) {
+                       if (value.isEmpty) return 'El Dominio es obligatorio';
+                       return null;
+                     },
+                   ),
+                  
+                   SizedBox(
+                     height: 15.h,
+                   ),
+                   InputCustom(
+                     focusNode: _userFocus,
+                     controller: _inputUserController,
+                     onFieldSubmitted: (term) {
+                       _fieldFocusChange(context, _userFocus, _passFocus);
+                     },
+                     hintText: 'Ingresa tu usuario',
+                     validator: (value) {
+                       if (value.isEmpty) return 'El Usuario es obligatorio';
+                       return null;
+                     },
+                   ),
+                  
+                   SizedBox(
+                     height: 15.h,
+                   ),
+                   InputCustom(
+                     focusNode: _passFocus,
+                     controller: _inputPassController,
+                     textInputAction: TextInputAction.done,
+                     hintText: 'Ingresa tu contraseña',
+                     validator: (value) {
+                       if (value.isEmpty) return 'La contraseña es obligatorio';
+                       return null;
+                     },
+                   ),
+
+                   */
+                  
+                   SizedBox(
+                     height: 25.h,
+                   ),
+                   ButtonCustom(
+                     text: 'Elegir archivo',
+                     fullscreen: true,
+                     onTap: () async {
+                       FilePickerResult result = await FilePicker.platform.pickFiles();
+                  
+                       if(result != null) {
+                         PlatformFile file = result.files.first;
+                  
+                         setState(() {
+                           nameFile = file.name;
+                           pathFile = file.path;
+                  
+                           _isButton= true;
+                         });
+                       } else {
+                         // User canceled the picker
+                       }
+                     },
+                   ),
+                  
+                   SizedBox(
+                     height: 20.h,
+                   ),
+                  
+                   Center(
+                     child: Text(
+                       nameFile,
+                       style: StyleGeneral.styleTextSmall,
+                       textAlign: TextAlign.center,
+                     )
+                   ),
+                  
+                   SizedBox(
+                     height: 65.h,
+                   ),
 
                   _isButton ? _isLoading ? ActivityIndicator() : GestureDetector(
                     onTap: (){
@@ -189,41 +191,48 @@ class _HomePageState extends State<HomePage> {
   }
 
   _sendFiles() async {
-    EasyLoading.show(status: 'loading...');
 
-    // host = _inputDominioController.text.trim();
-    // user = _inputUserController.text.trim();
-    // pass = _inputPassController.text.trim();
-    //
-    //
+    setState(() {
+      _isLoading = true;
+    });
+
+     //host = _inputDominioController.text.trim();
+     //user = _inputUserController.text.trim();
+     //pass = _inputPassController.text.trim();
+    
+    
     // FTPConnect ftpConnect = FTPConnect(host , user:user , pass:pass);
-    // //FTPConnect ftpConnect = FTPConnect("chef24seven.com" , user:"chef24seven" , pass:"4BBV1RSqBF*vofPjO");
-    //
-    // try {
-    //   File fileToUpload = File(pathFile);
-    //   await ftpConnect.connect();
-    //   bool res = await ftpConnect.uploadFileWithRetry(fileToUpload, pRetryCount: 2);
-    //
-    //   //await ftpConnect.uploadFile(fileToUpload);
-    //   await ftpConnect.disconnect();
-    //
-    //   print(res);
-    //
-    //   if(res){
-    //     SweetAlert.show(context,
-    //         subtitle: "Envio exitoso",
-    //         style: SweetAlertStyle.success);
-    //   }
-    // } catch (e) {
-    //   //error
-    //   print("error: "+e);
-    //   setState(() {
-    //     error = e.toString();
-    //   });
-    // }
-    // setState(() {
-    //   _isLoading = true;
-    // });
+     //FTPConnect ftpConnect = FTPConnect("chef24seven.com" , user:"chef24seven" , pass:"4BBV1RSqBF*vofPjO");
+     FTPConnect ftpConnect = FTPConnect("10.3.141.1" , user:"pi" , pass:"Estige1981");
+
+     try {
+       File fileToUpload = File(pathFile);
+       await ftpConnect.connect();
+       bool res = await ftpConnect.uploadFileWithRetry(fileToUpload, pRetryCount: 2);
+    
+       await ftpConnect.uploadFile(fileToUpload);
+       await ftpConnect.disconnect();
+    
+       print(res);
+    
+       if(res){
+         SweetAlert.show(context,
+             subtitle: "Envio exitoso",
+             style: SweetAlertStyle.success);
+
+         setState(() {
+           _isLoading = false;
+           _isButton = false;
+         });
+       }
+     } catch (e) {
+       ///error
+       print("error: "+e);
+       setState(() {
+         error = e.toString();
+       });
+     }
+
 
 
   }

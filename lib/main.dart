@@ -39,8 +39,8 @@ class MyApp extends StatelessWidget {
     return ScreenUtilInit(
       builder: () => MaterialApp(
         debugShowCheckedModeBanner: false,
-     //   home: HomePage(),
-        home: TosatAlert(),
+        home: HomePage(),
+     //   home: TosatAlert(),
         theme: ThemeData(
             primarySwatch: Colors.red, primaryColor: Color(0xFF191919)
         ),
