@@ -31,7 +31,8 @@ dependencies:
   flutter_screenutil: any
   file_picker: ^4.4.0
   ftpconnect: ^1.0.0
-
+  sweetalert: any
+  flutter_easyloading: ^3.0.3
 
 dev_dependencies:
   flutter_test:

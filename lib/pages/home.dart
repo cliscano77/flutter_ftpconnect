@@ -1,12 +1,15 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ftp_connect_wifi/utils/style.dart';
+import 'package:ftp_connect_wifi/widgets/activity_indicator.dart';
 import 'package:ftp_connect_wifi/widgets/button_custom.dart';
 import 'package:ftp_connect_wifi/widgets/input_custom.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:ftpconnect/ftpconnect.dart';
+import 'package:sweetalert/sweetalert.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -25,8 +28,14 @@ class _HomePageState extends State<HomePage> {
   final FocusNode _userFocus = FocusNode();
   final FocusNode _passFocus = FocusNode();
 
-  String nameFile = '', host, user, pass;
+  String nameFile = '' , pathFile, host, user, pass;
   String error = '';
+
+  //////////
+  bool _isLoading = false;
+  bool _isButton = true;
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -46,99 +55,98 @@ class _HomePageState extends State<HomePage> {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    'FTP Connect',
-                    style: StyleGeneral.styleTextTitlePage,
-                    textAlign: TextAlign.center,
-                  ),
+                  // Text(
+                  //   'FTP Connect',
+                  //   style: StyleGeneral.styleTextTitlePage,
+                  //   textAlign: TextAlign.center,
+                  // ),
+                  //
+                  // SizedBox(height: 20.h),
+                  // InputCustom(
+                  //   focusNode: _dominioFocus,
+                  //   controller: _inputDominioController,
+                  //   keyboardType: TextInputType.number,
+                  //   onFieldSubmitted: (term) {
+                  //     _fieldFocusChange(context, _dominioFocus, _userFocus);
+                  //   },
+                  //   hintText: 'Ingresa tu dominio',
+                  //   validator: (value) {
+                  //     if (value.isEmpty) return 'El Dominio es obligatorio';
+                  //     return null;
+                  //   },
+                  // ),
+                  //
+                  // SizedBox(
+                  //   height: 15.h,
+                  // ),
+                  // InputCustom(
+                  //   focusNode: _userFocus,
+                  //   controller: _inputUserController,
+                  //   onFieldSubmitted: (term) {
+                  //     _fieldFocusChange(context, _userFocus, _passFocus);
+                  //   },
+                  //   hintText: 'Ingresa tu usuario',
+                  //   validator: (value) {
+                  //     if (value.isEmpty) return 'El Usuario es obligatorio';
+                  //     return null;
+                  //   },
+                  // ),
+                  //
+                  // SizedBox(
+                  //   height: 15.h,
+                  // ),
+                  // InputCustom(
+                  //   focusNode: _passFocus,
+                  //   controller: _inputPassController,
+                  //   textInputAction: TextInputAction.done,
+                  //   hintText: 'Ingresa tu contraseña',
+                  //   validator: (value) {
+                  //     if (value.isEmpty) return 'La contraseña es obligatorio';
+                  //     return null;
+                  //   },
+                  // ),
+                  //
+                  // SizedBox(
+                  //   height: 25.h,
+                  // ),
+                  // ButtonCustom(
+                  //   text: 'Elegir archivo',
+                  //   fullscreen: true,
+                  //   onTap: () async {
+                  //     FilePickerResult result = await FilePicker.platform.pickFiles();
+                  //
+                  //     if(result != null) {
+                  //       PlatformFile file = result.files.first;
+                  //
+                  //       setState(() {
+                  //         nameFile = file.name;
+                  //         pathFile = file.path;
+                  //
+                  //         _isButton= true;
+                  //       });
+                  //     } else {
+                  //       // User canceled the picker
+                  //     }
+                  //   },
+                  // ),
+                  //
+                  // SizedBox(
+                  //   height: 20.h,
+                  // ),
+                  //
+                  // Center(
+                  //   child: Text(
+                  //     nameFile,
+                  //     style: StyleGeneral.styleTextSmall,
+                  //     textAlign: TextAlign.center,
+                  //   )
+                  // ),
+                  //
+                  // SizedBox(
+                  //   height: 65.h,
+                  // ),
 
-                  SizedBox(height: 20.h),
-                  InputCustom(
-                    focusNode: _dominioFocus,
-                    controller: _inputDominioController,
-                    onFieldSubmitted: (term) {
-                      _fieldFocusChange(context, _dominioFocus, _userFocus);
-                    },
-                    hintText: 'Ingresa tu dominio',
-                    validator: (value) {
-                      if (value.isEmpty) return 'El Dominio es obligatorio';
-                      return null;
-                    },
-                  ),
-
-                  SizedBox(
-                    height: 15.h,
-                  ),
-                  InputCustom(
-                    focusNode: _userFocus,
-                    controller: _inputUserController,
-                    onFieldSubmitted: (term) {
-                      _fieldFocusChange(context, _userFocus, _passFocus);
-                    },
-                    hintText: 'Ingresa tu usuario',
-                    validator: (value) {
-                      if (value.isEmpty) return 'El Usuario es obligatorio';
-                      return null;
-                    },
-                  ),
-
-                  SizedBox(
-                    height: 15.h,
-                  ),
-                  InputCustom(
-                    focusNode: _passFocus,
-                    controller: _inputPassController,
-                    textInputAction: TextInputAction.done,
-                    hintText: 'Ingresa tu contraseña',
-                    validator: (value) {
-                      if (value.isEmpty) return 'La contraseña es obligatorio';
-                      return null;
-                    },
-                  ),
-
-                  SizedBox(
-                    height: 25.h,
-                  ),
-                  ButtonCustom(
-                    text: 'Elegir archivo',
-                    fullscreen: true,
-                    onTap: () async {
-                      FilePickerResult result = await FilePicker.platform.pickFiles();
-
-                      if(result != null) {
-                        PlatformFile file = result.files.first;
-                        print(file.name);
-                        print(file.bytes);
-                        print(file.size);
-                        print(file.extension);
-                        print(file.path);
-
-                        setState(() {
-                          nameFile = file.name;
-                        });
-                      } else {
-                        // User canceled the picker
-                      }
-                    },
-                  ),
-
-                  SizedBox(
-                    height: 20.h,
-                  ),
-
-                  Center(
-                    child: Text(
-                      nameFile,
-                      style: StyleGeneral.styleTextSmall,
-                      textAlign: TextAlign.center,
-                    )
-                  ),
-
-                  SizedBox(
-                    height: 65.h,
-                  ),
-
-                  GestureDetector(
+                  _isButton ? _isLoading ? ActivityIndicator() : GestureDetector(
                     onTap: (){
                       _sendFiles();
                     },
@@ -158,7 +166,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                     ),
-                  ),
+                  ): Container(),
 
                   Center(
                       child: Text(
@@ -181,25 +189,42 @@ class _HomePageState extends State<HomePage> {
   }
 
   _sendFiles() async {
+    EasyLoading.show(status: 'loading...');
 
-    host = _inputDominioController.text.trim();
-    user = _inputUserController.text.trim();
-    pass = _inputPassController.text.trim();
+    // host = _inputDominioController.text.trim();
+    // user = _inputUserController.text.trim();
+    // pass = _inputPassController.text.trim();
+    //
+    //
+    // FTPConnect ftpConnect = FTPConnect(host , user:user , pass:pass);
+    // //FTPConnect ftpConnect = FTPConnect("chef24seven.com" , user:"chef24seven" , pass:"4BBV1RSqBF*vofPjO");
+    //
+    // try {
+    //   File fileToUpload = File(pathFile);
+    //   await ftpConnect.connect();
+    //   bool res = await ftpConnect.uploadFileWithRetry(fileToUpload, pRetryCount: 2);
+    //
+    //   //await ftpConnect.uploadFile(fileToUpload);
+    //   await ftpConnect.disconnect();
+    //
+    //   print(res);
+    //
+    //   if(res){
+    //     SweetAlert.show(context,
+    //         subtitle: "Envio exitoso",
+    //         style: SweetAlertStyle.success);
+    //   }
+    // } catch (e) {
+    //   //error
+    //   print("error: "+e);
+    //   setState(() {
+    //     error = e.toString();
+    //   });
+    // }
+    // setState(() {
+    //   _isLoading = true;
+    // });
 
-    FTPConnect ftpConnect = FTPConnect(host , user:user , pass:pass);
-    print(ftpConnect);
-    try {
-      File fileToUpload = File(nameFile);
-      await ftpConnect.connect();
-      await ftpConnect.uploadFile(fileToUpload);
-      await ftpConnect.disconnect();
-    } catch (e) {
-      //error
-      print("error: "+e);
-      setState(() {
-        error = e.toString();
-      });
-    }
 
   }
 
